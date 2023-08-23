@@ -1,4 +1,7 @@
-// import platform from './img/platform.png'
+const platform = document.getElementById("platform");
+const background = document.getElementById("background");
+const hills = document.getElementById("hills");
+const platformSmallTall = document.getElementById("platformSmallTall");
 // console.log(platform)
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
@@ -7,6 +10,12 @@ canvas.width = window.innerWidth
 canvas.height = window.innerHeight
 
 const gravity = 0.4
+
+function createImage(imageSrc) {
+    const image = new Image()
+    image.src = imageSrc.src
+    return image
+}
 
 class Player{
     constructor(){
@@ -52,12 +61,35 @@ class Platform {
     }
 }
 
+class GenericObject {
+    constructor({x, y}) {
+        this.position = {
+            x : x,
+            y : y
+        }
+        this.width = 200
+        this.height = 20
+    }
+    draw() {
+        c.fillRect(this.position.x, this.position.y, this.width, this.height)
+    }
+}
+
+const Pimg = createImage(platform)
 const player = new Player()
 // const platform = new Platform()
-const platforms = [new Platform({x : 200, y : 500}),
-                new Platform({x : 500, y : 400}),
-                new Platform({x : 1000, y : 500}),
-                new Platform({x : 1200, y : 400})]
+const platforms = [new Platform({x : 200, y : 500, image : Pimg}),
+                new Platform({x : 500, y : 400, image : Pimg}),
+                new Platform({x : 1000, y : 500, image : Pimg}),
+                new Platform({x : 1200, y : 400, image : Pimg})]
+
+const genericobjects = [
+    new GenericObject({
+        x : 0,
+        y : 0,
+        image : createImage(background)
+    })
+]
 
 const keys = {
     right : {
