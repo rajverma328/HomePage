@@ -3,11 +3,13 @@ const background = document.getElementById("background");
 const hills = document.getElementById("hills");
 const platformSmallTall = document.getElementById("platformSmallTall");
 // console.log(platform)
+
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
-canvas.width = window.innerWidth
-canvas.height = window.innerHeight
+canvas.width = 1024
+canvas.height = 576
+const bottom_offset = 100  
 
 const gravity = 0.4
 
@@ -15,6 +17,21 @@ function createImage(imageSrc) {
     const image = new Image()
     image.src = imageSrc.src
     return image
+}
+
+class Platform {
+    constructor({x, y, image}) {
+        this.position = {
+            x : x,
+            y : y
+        }
+        this.width = 500
+        this.height = bottom_offset
+        this.image = image
+    }
+    draw() {
+        c.drawImage(this.image, this.position.x, this.position.y, this.width, this.height)
+    }
 }
 
 class Player{
@@ -37,58 +54,52 @@ class Player{
 
     update(){
         this.position.x = this.position.x + this.velocity.x 
-        this.position.y = this.position.y + this.velocity.y 
+        this.position.y = this.position.y + this.velocity.y
         if(this.position.y + this.height + this.velocity.y <= canvas.height)
             this.velocity.y = this.velocity.y + gravity
         else
             this.velocity.y = 0
+
         this.draw()
     }
 }
 
-class Platform {
-    constructor({x, y}) {
-        this.position = {
-            x : x,
-            y : y
-        }
-        this.width = 200
-        this.height = 20
-    }
-    draw() {
-        c.fillStyle = 'blue'
-        c.fillRect(this.position.x, this.position.y, this.width, this.height)
-    }
-}
-
 class GenericObject {
-    constructor({x, y}) {
+    constructor({x, y, image}) {
         this.position = {
-            x : x,
-            y : y
+            x : x-1,
+            y : y-1
         }
-        this.width = 200
-        this.height = 20
+        this.image = image
     }
     draw() {
-        c.fillRect(this.position.x, this.position.y, this.width, this.height)
+        c.drawImage(this.image, this.position.x, this.position.y)
     }
 }
 
 const Pimg = createImage(platform)
+// console.log(Pimg)
+
 const player = new Player()
-// const platform = new Platform()
-const platforms = [new Platform({x : 200, y : 500, image : Pimg}),
-                new Platform({x : 500, y : 400, image : Pimg}),
-                new Platform({x : 1000, y : 500, image : Pimg}),
-                new Platform({x : 1200, y : 400, image : Pimg})]
+
+const platforms = [new Platform({x : 0, y : canvas.height-bottom_offset, image : Pimg}),
+                new Platform({x : 500-1, y : canvas.height-bottom_offset, image : Pimg}),
+                new Platform({x : 1000-2, y : canvas.height-bottom_offset, image : Pimg}),
+                new Platform({x : 1500-3, y : canvas.height-bottom_offset, image : Pimg}),
+                new Platform({x : 2000-4, y : canvas.height-bottom_offset, image : Pimg}),
+                new Platform({x : 2700-5, y : canvas.height-bottom_offset, image : Pimg}),
+                new Platform({x : 3200-5, y : canvas.height-bottom_offset, image : Pimg}),
+                new Platform({x : 3700-5, y : canvas.height-bottom_offset, image : Pimg}),
+                new Platform({x : 4400-5, y : canvas.height-bottom_offset, image : Pimg}),
+                new Platform({x : 4900-5, y : canvas.height-bottom_offset, image : Pimg}),
+                new Platform({x : 5400-6, y : canvas.height-bottom_offset, image : Pimg}),
+                new Platform({x : 5900-7, y : canvas.height-bottom_offset, image : Pimg})]
 
 const genericobjects = [
-    new GenericObject({
-        x : 0,
-        y : 0,
-        image : createImage(background)
-    })
+    new GenericObject({x : 0, y : 0, image : createImage(background)}),
+    new GenericObject({x : 0, y : 100, image : createImage(hills)}),
+    new GenericObject({x : 3000, y : 0, image : createImage(background)}),
+    new GenericObject({x : 3000, y : 100, image : createImage(hills)})
 ]
 
 const keys = {
@@ -108,30 +119,42 @@ const keys = {
 
 function animate(){
     requestAnimationFrame(animate)
-    c.clearRect(0,0,canvas.width,canvas.height)
+    c.fillStyle = 'white'
+    c.fillRect(0,0,canvas.width,canvas.height)
 
+    genericobjects.forEach(genericobject_c => {
+        genericobject_c.draw()
+    })
+
+    console.log(platforms[1].position.x)
     if(keys.right.pressed && player.position.x < 600){
         player.velocity.x = 5
     }else if (keys.left.pressed && player.position.x > 200){
         player.velocity.x = -5
     }else {
         player.velocity.x = 0
-        if(keys.right.pressed == true){
+        if(keys.right.pressed == true && platforms[1].position.x > -5000){
             platforms.forEach((platform) => {
                 platform.position.x -= 5
+                genericobjects.forEach(genericobject_c => {
+                    genericobject_c.position.x -= 0.5 
+                })
             }) 
-        }else if(keys.left.pressed == true && platforms[1].position.x < 1590){
+        }else if(keys.left.pressed == true && platforms[1].position.x < 500-1){
             platforms.forEach((platform) => {
                 platform.position.x += 5
+                genericobjects.forEach(genericobject_c => {
+                    genericobject_c.position.x += 0.5
+                })
             }) 
         }
     }
 
-    player.update()
     platforms.forEach((platform) => { // name of variable 
         platform.draw()
     }) 
 
+    player.update()
 
     //collision detection 
     platforms.forEach((platform) => {
@@ -142,6 +165,12 @@ function animate(){
             player.velocity.y = 0
         }
     })
+
+    if(player.position.y >= canvas.height-player.height){
+        player.position.x = 100
+        player.position.y = 100 
+        player.velocity.y = 0
+    }
     // console.log(platforms[1].position.x)
 }
 
