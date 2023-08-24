@@ -345,3 +345,17 @@ fullscreenButton.addEventListener("click", function() {
         bgm.style.display = 'none'
     }
 });
+
+function handleOrientationChange() {
+    if (screen.orientation.angle === 0 || screen.orientation.angle === 180) {
+        window.location.reload()
+        console.log("shit")
+      } else if (screen.orientation.angle === 90 || screen.orientation.angle === -90) {
+        window.location.reload()
+        console.log("shit")
+      }
+        
+  }
+  
+  // Listen for orientation change events
+  window.addEventListener("orientationchange", handleOrientationChange);
