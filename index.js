@@ -10,7 +10,10 @@ const spriteStandRight = document.getElementById("spriteStandRight");
 
 const pi_name = document.getElementById("name"); 
 const st = document.getElementById("start")
-// console.log(platform)
+
+const fullscreenButton = document.getElementById('full_screen_button');
+const bgm = document.getElementById('bgm');
+// console.log(fullscreenButton)
 
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
@@ -167,6 +170,10 @@ function animate(){
     c.fillStyle = 'white'
     c.fillRect(0,0,canvas.width,canvas.height)
 
+    // var container = document.getElementById("buttonContainer");
+    // // Append the button to the container
+    // container.appendChild(fullscreenButton);
+
     genericobjects.forEach(genericobject_c => {
         genericobject_c.draw()
     })
@@ -302,5 +309,49 @@ window.addEventListener('touchend', function(event) {
         player.image = player.sprites.stand.right 
         player.CPW = player.sprites.stand.cropWidth
         player.width = player.sprites.stand.width
+    }
+});
+
+fullscreenButton.addEventListener('touchstart', function() {
+    console.log("hh")
+    const elem = document.documentElement;
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+        fullscreenButton.style.display = 'none'
+        bgm.style.display = 'none'
+    } else if (elem.mozRequestFullScreen) { // Firefox
+        elem.mozRequestFullScreen();
+        fullscreenButton.style.display = 'none'
+        bgm.style.display = 'none'
+    } else if (elem.webkitRequestFullscreen) { // Chrome, Safari, Opera
+        elem.webkitRequestFullscreen();
+        fullscreenButton.style.display = 'none'
+        bgm.style.display = 'none'
+    } else if (elem.msRequestFullscreen) { // Edge
+        elem.msRequestFullscreen();
+        fullscreenButton.style.display = 'none'
+        bgm.style.display = 'none'
+    }
+});
+
+fullscreenButton.addEventListener("click", function() {
+    console.log("hh")
+    const elem = document.documentElement;
+    if (elem.requestFullscreen) {
+        elem.requestFullscreen();
+        fullscreenButton.style.display = 'none'
+        bgm.style.display = 'none'
+    } else if (elem.mozRequestFullScreen) { // Firefox
+        elem.mozRequestFullScreen();
+        fullscreenButton.style.display = 'none'
+        bgm.style.display = 'none'
+    } else if (elem.webkitRequestFullscreen) { // Chrome, Safari, Opera
+        elem.webkitRequestFullscreen();
+        fullscreenButton.style.display = 'none'
+        bgm.style.display = 'none'
+    } else if (elem.msRequestFullscreen) { // Edge
+        elem.msRequestFullscreen();
+        fullscreenButton.style.display = 'none'
+        bgm.style.display = 'none'
     }
 });
