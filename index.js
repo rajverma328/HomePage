@@ -355,3 +355,25 @@ fullscreenButton.addEventListener("click", function() {
         bgm.style.display = 'none'
     }
 });
+var orientation = this.screen.orientation.angle 
+window.addEventListener("orientationchange", function() {
+    var orientation = this.screen.orientation.angle 
+    console.log(orientation)
+if (orientation == 0) {
+    console.log("Portrait mode");
+    screen.orientation.lock("landscape").then(function() {
+    console.log("Orientation changed to landscape");
+    }).catch(function(error) {
+    console.error("Failed to change orientation:", error);
+    });
+} else if (orientation == 90 || orientation === -90) {
+    console.log("Landscape mode");
+} else if (orientation == 180) {
+    console.log("Portrait mode");
+    screen.orientation.lock("landscape").then(function() {
+    console.log("Orientation changed to landscape");
+    }).catch(function(error) {
+    console.error("Failed to change orientation:", error);
+    });;
+}
+});
