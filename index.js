@@ -171,7 +171,7 @@ function animate(){
         genericobject_c.draw()
     })
 
-    console.log(platforms[1].position.x)
+    // console.log(platforms[1].position.x)
     if(keys.right.pressed && player.position.x < 600){
         player.velocity.x = 5
     }else if (keys.left.pressed && player.position.x > 200){
@@ -262,3 +262,45 @@ window.addEventListener('keyup', ({ key }) => {
         keys.down.pressed = false
     }
 )
+var touchYstart = 0
+window.addEventListener('touchstart', function(event) {
+    var touchX = event.changedTouches[0].clientX;;
+    touchYstart = event.changedTouches[0].clientY;
+    if (touchX < window.innerWidth / 2) {
+        keys.left.pressed = true
+        player.image = player.sprites.run.left 
+        player.CPW = player.sprites.run.cropWidth
+        player.width = player.sprites.run.width     
+    } else {
+        keys.right.pressed = true
+        player.image = player.sprites.run.right 
+        player.CPW = player.sprites.run.cropWidth
+        player.width = player.sprites.run.width
+    }
+});
+document.addEventListener('touchmove', function(event) {
+    var touchEndY = event.touches[0].clientY;
+    var swipeDistanceY = touchEndY - touchYstart;
+    var minSwipeDistance = 50; // Adjust this threshold as needed
+    if (Math.abs(swipeDistanceY) >= minSwipeDistance && player.velocity.y == 0) {
+        if (swipeDistanceY < 0) {
+            keys.up.pressed = true
+            player.velocity.y -= 15
+        }
+    }
+
+});
+window.addEventListener('touchend', function(event) {
+    var touchX = event.changedTouches[0].clientX;;
+    if (touchX < window.innerWidth / 2) {
+        keys.left.pressed = false
+        player.image = player.sprites.stand.left 
+        player.CPW = player.sprites.stand.cropWidth
+        player.width = player.sprites.stand.width
+    } else {
+        keys.right.pressed = false
+        player.image = player.sprites.stand.right 
+        player.CPW = player.sprites.stand.cropWidth
+        player.width = player.sprites.stand.width
+    }
+});
