@@ -20,13 +20,13 @@ function createImage(imageSrc) {
 }
 
 class Platform {
-    constructor({x, y, image}) {
+    constructor({x, y, image, widd, hdd}) {
         this.position = {
             x : x,
             y : y
         }
-        this.width = 500
-        this.height = bottom_offset
+        this.width = widd
+        this.height = hdd
         this.image = image
     }
     draw() {
@@ -78,22 +78,37 @@ class GenericObject {
 }
 
 const Pimg = createImage(platform)
+const PTimg = createImage(platformSmallTall)
 // console.log(Pimg)
 
 const player = new Player()
 
-const platforms = [new Platform({x : 0, y : canvas.height-bottom_offset, image : Pimg}),
-                new Platform({x : 500-1, y : canvas.height-bottom_offset, image : Pimg}),
-                new Platform({x : 1000-2, y : canvas.height-bottom_offset, image : Pimg}),
-                new Platform({x : 1500-3, y : canvas.height-bottom_offset, image : Pimg}),
-                new Platform({x : 2000-4, y : canvas.height-bottom_offset, image : Pimg}),
-                new Platform({x : 2700-5, y : canvas.height-bottom_offset, image : Pimg}),
-                new Platform({x : 3200-5, y : canvas.height-bottom_offset, image : Pimg}),
-                new Platform({x : 3700-5, y : canvas.height-bottom_offset, image : Pimg}),
-                new Platform({x : 4400-5, y : canvas.height-bottom_offset, image : Pimg}),
-                new Platform({x : 4900-5, y : canvas.height-bottom_offset, image : Pimg}),
-                new Platform({x : 5400-6, y : canvas.height-bottom_offset, image : Pimg}),
-                new Platform({x : 5900-7, y : canvas.height-bottom_offset, image : Pimg})]
+const platforms = [new Platform({x : 0, y : canvas.height-bottom_offset, image : Pimg, widd : 500, hdd : bottom_offset}),
+    new Platform({x : 700, y : canvas.height-bottom_offset-200, image : PTimg, widd : 300, hdd : 200}),//small top platfroms
+    new Platform({x : 1200, y : canvas.height-bottom_offset-100, image : PTimg, widd : 300, hdd : 200}),
+    new Platform({x : 1500, y : canvas.height-bottom_offset-200, image : PTimg, widd : 300, hdd : 200}),
+    new Platform({x : 2900, y : canvas.height-bottom_offset-100, image : PTimg, widd : 300, hdd : 200}),
+    new Platform({x : 3200, y : canvas.height-bottom_offset-200, image : PTimg, widd : 300, hdd : 200}),
+    new Platform({x : 5100, y : canvas.height-bottom_offset-200, image : PTimg, widd : 300, hdd : 200}),
+                new Platform({x : 500-1, y : canvas.height-bottom_offset, image : Pimg, widd : 500, hdd : bottom_offset}),
+                new Platform({x : 1000-2, y : canvas.height-bottom_offset, image : Pimg, widd : 500, hdd : bottom_offset}),
+                new Platform({x : 1500-3, y : canvas.height-bottom_offset, image : Pimg, widd : 500, hdd : bottom_offset}),
+                new Platform({x : 2000-4, y : canvas.height-bottom_offset, image : Pimg, widd : 500, hdd : bottom_offset}),
+                new Platform({x : 2700-5, y : canvas.height-bottom_offset, image : Pimg, widd : 500, hdd : bottom_offset}),
+                new Platform({x : 3200-5, y : canvas.height-bottom_offset, image : Pimg, widd : 500, hdd : bottom_offset}),
+                new Platform({x : 3700-5, y : canvas.height-bottom_offset, image : Pimg, widd : 500, hdd : bottom_offset}),
+                new Platform({x : 4400-5, y : canvas.height-bottom_offset, image : Pimg, widd : 500, hdd : bottom_offset}),
+                new Platform({x : 4900-5, y : canvas.height-bottom_offset, image : Pimg, widd : 500, hdd : bottom_offset}),
+                new Platform({x : 5400-6, y : canvas.height-bottom_offset, image : Pimg, widd : 500, hdd : bottom_offset}),
+                new Platform({x : 5900-7, y : canvas.height-bottom_offset, image : Pimg, widd : 500, hdd : bottom_offset})]
+
+// const small_platforms = [new Platform({x : 700, y : canvas.height-bottom_offset-60, image : PTimg, widd : 250, hdd : 227}),
+//                 // new Platform({x : 500-1, y : canvas.height-bottom_offset, image : PTimg}),
+//                 // new Platform({x : 1000-2, y : canvas.height-bottom_offset, image : PTimg}),
+//                 // new Platform({x : 1500-3, y : canvas.height-bottom_offset, image : PTimg}),
+//                 // new Platform({x : 1500-3, y : canvas.height-bottom_offset, image : PTimg}),
+//                 // new Platform({x : 1500-3, y : canvas.height-bottom_offset, image : PTimg}),
+//                 new Platform({x : 5900-7, y : canvas.height-bottom_offset, image : PTimg, widd : 250, hdd : 227})]
 
 const genericobjects = [
     new GenericObject({x : 0, y : 0, image : createImage(background)}),
@@ -140,7 +155,7 @@ function animate(){
                     genericobject_c.position.x -= 0.5 
                 })
             }) 
-        }else if(keys.left.pressed == true && platforms[1].position.x < 500-1){
+        }else if(keys.left.pressed == true && platforms[1].position.x < 700){
             platforms.forEach((platform) => {
                 platform.position.x += 5
                 genericobjects.forEach(genericobject_c => {
