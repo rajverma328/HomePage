@@ -12,6 +12,21 @@ const pi_name = document.getElementById("name");
 const st = document.getElementById("start")
 // console.log(platform)
 
+const fullscreenElement = document.getElementById('fullscreenElement');
+
+// Function to request full-screen
+function requestFullScreen() {
+    if (fullscreenElement.requestFullscreen) {
+        fullscreenElement.requestFullscreen();
+    } else if (fullscreenElement.mozRequestFullScreen) { // Firefox
+        fullscreenElement.mozRequestFullScreen();
+    } else if (fullscreenElement.webkitRequestFullscreen) { // Chrome, Safari and Opera
+        fullscreenElement.webkitRequestFullscreen();
+    } else if (fullscreenElement.msRequestFullscreen) { // IE/Edge
+        fullscreenElement.msRequestFullscreen();
+    }
+}
+
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
