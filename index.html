@@ -31,10 +31,18 @@
 
 <script src = "index.js">
 
-    document.requestFullscreen();
-    element.mozRequestFullScreen();
-    element.webkitRequestFullscreen();
-    element.msRequestFullscreen();
+    document.addEventListener("DOMContentLoaded", () => {
+        const element = document.documentElement; // Entire document
+        if (element.requestFullscreen) {
+            element.requestFullscreen();
+        } else if (element.mozRequestFullScreen) { // Firefox
+            element.mozRequestFullScreen();
+        } else if (element.webkitRequestFullscreen) { // Chrome, Safari, Opera
+            element.webkitRequestFullscreen();
+        } else if (element.msRequestFullscreen) { // Edge
+            element.msRequestFullscreen();
+        }
+    });
 
     function checkOrientation() {
         if (window.orientation === 90 || window.orientation === -90) {
