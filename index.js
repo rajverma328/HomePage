@@ -18,9 +18,14 @@ const bgm = document.getElementById('bgm');
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
-
-canvas.width = 1024
-canvas.height = 576
+const scw = screen.width
+console.log(scw)
+canvas.width = screen.width
+canvas.height = screen.height
+if(canvas.width > 1024)
+    canvas.width = 1024
+if(canvas.height > 576)
+    canvas.height = 576
 const bottom_offset = 100  
 
 const gravity = 0.4
@@ -180,9 +185,9 @@ function animate(){
     })
 
     // console.log(platforms[1].position.x)
-    if(keys.right.pressed && player.position.x < 600){
+    if(keys.right.pressed && player.position.x < scw/2){
         player.velocity.x = 5
-    }else if (keys.left.pressed && player.position.x > 200){
+    }else if (keys.left.pressed && player.position.x > scw/5){
         player.velocity.x = -5
     }else {
         player.velocity.x = 0
