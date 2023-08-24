@@ -18,7 +18,6 @@ const bgm = document.getElementById('bgm');
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
-window.screen.orientation.lock("landscape");
 
 canvas.width = 1024
 canvas.height = 576
@@ -316,24 +315,8 @@ window.addEventListener('touchend', function(event) {
 
 fullscreenButton.addEventListener('touchstart', function() {
     console.log("hh")
-    const elem = document.documentElement;
-    if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-        fullscreenButton.style.display = 'none'
-        bgm.style.display = 'none'
-    } else if (elem.mozRequestFullScreen) { // Firefox
-        elem.mozRequestFullScreen();
-        fullscreenButton.style.display = 'none'
-        bgm.style.display = 'none'
-    } else if (elem.webkitRequestFullscreen) { // Chrome, Safari, Opera
-        elem.webkitRequestFullscreen();
-        fullscreenButton.style.display = 'none'
-        bgm.style.display = 'none'
-    } else if (elem.msRequestFullscreen) { // Edge
-        elem.msRequestFullscreen();
-        fullscreenButton.style.display = 'none'
-        bgm.style.display = 'none'
-    }
+    fullscreenButton.style.display = 'none'
+    bgm.style.display = 'none'
 });
 
 fullscreenButton.addEventListener("click", function() {
