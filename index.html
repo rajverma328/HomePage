@@ -27,5 +27,25 @@
 <img id="name" src="./img/personal_info/name.PNG" style="display: none;">
 <img id="start" src="./img/start.png" style="display: none;">
 
-<script src = "index.js"> </script>
+<script src = "index.js">
+    
+    document.requestFullscreen();
+    element.mozRequestFullScreen();
+    element.webkitRequestFullscreen();
+    element.msRequestFullscreen();
+
+    function checkOrientation() {
+        if (window.orientation === 90 || window.orientation === -90) {
+            document.body.style.display = "block";
+        } else {
+            document.body.style.display = "none";
+        }
+    }
+    
+    // Initial check
+    checkOrientation();
+    
+    // Listen for orientation changes
+    window.addEventListener("orientationchange", checkOrientation);    
+</script>
 <!-- <img src="hills.png /> -->

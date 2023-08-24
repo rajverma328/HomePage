@@ -296,7 +296,7 @@ window.addEventListener('touchstart', function(event) {
 document.addEventListener('touchmove', function(event) {
     var touchEndY = event.touches[0].clientY;
     var swipeDistanceY = touchEndY - touchYstart;
-    var minSwipeDistance = 50; // Adjust this threshold as needed
+    var minSwipeDistance = 100; // Adjust this threshold as needed
     if (Math.abs(swipeDistanceY) >= minSwipeDistance && player.velocity.y == 0) {
         if (swipeDistanceY < 0) {
             keys.up.pressed = true
