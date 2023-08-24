@@ -7,6 +7,9 @@ const spriteRunLeft = document.getElementById("spriteRunLeft");
 const spriteRunRight = document.getElementById("spriteRunRight");
 const spriteStandLeft = document.getElementById("spriteStandLeft");
 const spriteStandRight = document.getElementById("spriteStandRight");
+
+const pi_name = document.getElementById("name"); 
+const st = document.getElementById("start")
 // console.log(platform)
 
 const canvas = document.querySelector('canvas')
@@ -133,13 +136,15 @@ const platforms = [new Platform({x : 0, y : canvas.height-bottom_offset, image :
                 new Platform({x : 4900-5, y : canvas.height-bottom_offset, image : Pimg, widd : 500, hdd : bottom_offset}),
                 new Platform({x : 5400-6, y : canvas.height-bottom_offset, image : Pimg, widd : 500, hdd : bottom_offset}),
                 new Platform({x : 5900-7, y : canvas.height-bottom_offset, image : Pimg, widd : 500, hdd : bottom_offset})]
-                
+
 
 const genericobjects = [
     new GenericObject({x : 0, y : 0, image : createImage(background)}),
     new GenericObject({x : 0, y : 100, image : createImage(hills)}),
     new GenericObject({x : 3000, y : 0, image : createImage(background)}),
-    new GenericObject({x : 3000, y : 100, image : createImage(hills)})
+    new GenericObject({x : 3000, y : 100, image : createImage(hills)}),
+    new GenericObject({x : 280, y : 0, image : createImage(pi_name)}),
+    new GenericObject({x : 100, y : 30, image : createImage(st)})
 ]
 
 const keys = {
