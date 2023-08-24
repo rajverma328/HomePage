@@ -2,6 +2,11 @@ const platform = document.getElementById("platform");
 const background = document.getElementById("background");
 const hills = document.getElementById("hills");
 const platformSmallTall = document.getElementById("platformSmallTall");
+
+const spriteRunLeft = document.getElementById("spriteRunLeft");
+const spriteRunRight = document.getElementById("spriteRunRight");
+const spriteStandLeft = document.getElementById("spriteStandLeft");
+const spriteStandRight = document.getElementById("spriteStandRight");
 // console.log(platform)
 
 const canvas = document.querySelector('canvas')
@@ -44,15 +49,42 @@ class Player{
             x : 0,
             y : 0
         }
-        this.width = 30
-        this.height = 30
+        
+        this.frame = 0;
+        this.sprites = {
+            stand : {
+                right : createImage(spriteStandRight),
+                left : createImage(spriteStandLeft),
+                cropWidth : 177,
+                width : 66
+            },
+            run : {
+                right : createImage(spriteRunRight),
+                left : createImage(spriteRunLeft),
+                cropWidth : 341,
+                width : 127.875
+            }
+        }
+        this.width = this.sprites.stand.width
+        this.height = 130
+        this.image = this.sprites.stand.right
+        this.CPW = this.sprites.stand.cropWidth
     }
     draw(){
-        c.fillStyle = 'red'
-        c.fillRect(this.position.x,this.position.y,this.width,this.height)
+        c.drawImage(this.image,
+            this.CPW*this.frame,
+            0,
+            this.CPW,
+            400, 
+            this.position.x,
+            this.position.y, 
+            this.width, 
+            this.height)
     }
 
     update(){
+        this.frame++
+        if(this.frame > 28) this.frame = 0
         this.position.x = this.position.x + this.velocity.x 
         this.position.y = this.position.y + this.velocity.y
         if(this.position.y + this.height + this.velocity.y <= canvas.height)
@@ -101,14 +133,7 @@ const platforms = [new Platform({x : 0, y : canvas.height-bottom_offset, image :
                 new Platform({x : 4900-5, y : canvas.height-bottom_offset, image : Pimg, widd : 500, hdd : bottom_offset}),
                 new Platform({x : 5400-6, y : canvas.height-bottom_offset, image : Pimg, widd : 500, hdd : bottom_offset}),
                 new Platform({x : 5900-7, y : canvas.height-bottom_offset, image : Pimg, widd : 500, hdd : bottom_offset})]
-
-// const small_platforms = [new Platform({x : 700, y : canvas.height-bottom_offset-60, image : PTimg, widd : 250, hdd : 227}),
-//                 // new Platform({x : 500-1, y : canvas.height-bottom_offset, image : PTimg}),
-//                 // new Platform({x : 1000-2, y : canvas.height-bottom_offset, image : PTimg}),
-//                 // new Platform({x : 1500-3, y : canvas.height-bottom_offset, image : PTimg}),
-//                 // new Platform({x : 1500-3, y : canvas.height-bottom_offset, image : PTimg}),
-//                 // new Platform({x : 1500-3, y : canvas.height-bottom_offset, image : PTimg}),
-//                 new Platform({x : 5900-7, y : canvas.height-bottom_offset, image : PTimg, widd : 250, hdd : 227})]
+                
 
 const genericobjects = [
     new GenericObject({x : 0, y : 0, image : createImage(background)}),
@@ -193,10 +218,18 @@ animate()
 
 window.addEventListener('keydown', ({ key }) => {    
     // console.log(key)
-    if(key == 'a' || key =='A' || key =='ArrowLeft') 
+    if(key == 'a' || key =='A' || key =='ArrowLeft'){
         keys.left.pressed = true
-    if(key == 'd' || key =='D' || key =='ArrowRight') 
+        player.image = player.sprites.run.left 
+        player.CPW = player.sprites.run.cropWidth
+        player.width = player.sprites.run.width
+    }
+    if(key == 'd' || key =='D' || key =='ArrowRight'){
         keys.right.pressed = true
+        player.image = player.sprites.run.right 
+        player.CPW = player.sprites.run.cropWidth
+        player.width = player.sprites.run.width
+    }
     if((key == 'w' || key =='W' || key =='ArrowUp') && player.velocity.y == 0 && keys.up.pressed == false){
         keys.up.pressed = true
         player.velocity.y -= 15
@@ -206,10 +239,18 @@ window.addEventListener('keydown', ({ key }) => {
     }
 )
 window.addEventListener('keyup', ({ key }) => {    
-    if(key == 'a' || key =='A' || key =='ArrowLeft') 
+    if(key == 'a' || key =='A' || key =='ArrowLeft'){
         keys.left.pressed = false
-    if(key == 'd' || key =='D' || key =='ArrowRight') 
+        player.image = player.sprites.stand.left 
+        player.CPW = player.sprites.stand.cropWidth
+        player.width = player.sprites.stand.width
+    }
+    if(key == 'd' || key =='D' || key =='ArrowRight'){
         keys.right.pressed = false
+        player.image = player.sprites.stand.right 
+        player.CPW = player.sprites.stand.cropWidth
+        player.width = player.sprites.stand.width
+    }
     if(key == 'w' || key =='W' || key =='ArrowUp')
         keys.up.pressed = false
     if(key == 's' || key =='S' || key =='ArrowDown') 
