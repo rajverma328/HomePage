@@ -18,7 +18,7 @@ const bgm = document.getElementById('bgm');
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
-screen.orientation.lock("landscape");
+window.screen.orientation.lock("landscape");
 
 canvas.width = 1024
 canvas.height = 576
@@ -356,26 +356,4 @@ fullscreenButton.addEventListener("click", function() {
         fullscreenButton.style.display = 'none'
         bgm.style.display = 'none'
     }
-});
-var orientation = this.screen.orientation.angle 
-window.addEventListener("orientationchange", function() {
-    var orientation = this.screen.orientation.angle 
-    console.log(orientation)
-if (orientation == 0) {
-    console.log("Portrait mode");
-    screen.orientation.lock("landscape").then(function() {
-    console.log("Orientation changed to landscape");
-    }).catch(function(error) {
-    console.error("Failed to change orientation:", error);
-    });
-} else if (orientation == 90 || orientation === -90) {
-    console.log("Landscape mode");
-} else if (orientation == 180) {
-    console.log("Portrait mode");
-    screen.orientation.lock("landscape").then(function() {
-    console.log("Orientation changed to landscape");
-    }).catch(function(error) {
-    console.error("Failed to change orientation:", error);
-    });;
-}
 });
