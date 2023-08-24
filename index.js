@@ -18,6 +18,8 @@ const bgm = document.getElementById('bgm');
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
+screen.orientation.lock("landscape");
+
 canvas.width = 1024
 canvas.height = 576
 const bottom_offset = 100  
