@@ -228,7 +228,7 @@ function animate(){
        (player.position.x + player.width >= platform.position.x) &&
        (player.position.x <= platform.position.x + platform.width)){    
             player.velocity.y = 0
-            console.log(countp)
+            // console.log(countp)
             if(countp == 6)
                 window.open('https://drive.google.com/file/d/12Nu13z2EpMvYJMEF0KVU1EfCP3uSLZ6_/view')
             else if(countp == 7)
