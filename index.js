@@ -9,17 +9,18 @@ const spriteStandLeft = document.getElementById("spriteStandLeft");
 const spriteStandRight = document.getElementById("spriteStandRight");
 
 const pi_name = document.getElementById("name"); 
-const st = document.getElementById("start")
-
-const fullscreenButton = document.getElementById('full_screen_button');
-const bgm = document.getElementById('bgm');
-// console.log(fullscreenButton)
+const st = document.getElementById("start");
+const branch = document.getElementById("branch");
+const inst = document.getElementById("inst");
+const interest = document.getElementById("interest");
+const contact = document.getElementById("contact");
+const yoda = document.getElementById("yoda");
+const githp = document.getElementById("gith");
+// console.log(interest)
 
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
-const scw = screen.width
-console.log(scw)
 canvas.width = screen.width
 canvas.height = screen.height
 if(canvas.width > 1024)
@@ -27,6 +28,7 @@ if(canvas.width > 1024)
 if(canvas.height > 576)
     canvas.height = 576
 const bottom_offset = 100  
+const scw = canvas.width 
 
 const gravity = 0.4
 
@@ -128,11 +130,11 @@ const PTimg = createImage(platformSmallTall)
 const player = new Player()
 
 const platforms = [new Platform({x : 0, y : canvas.height-bottom_offset, image : Pimg, widd : 500, hdd : bottom_offset}),
-    new Platform({x : 700, y : canvas.height-bottom_offset-200, image : PTimg, widd : 300, hdd : 200}),//small top platfroms
+    new Platform({x : 2000, y : canvas.height-bottom_offset-200, image : PTimg, widd : 300, hdd : 200}),//small top platfroms
     new Platform({x : 1200, y : canvas.height-bottom_offset-100, image : PTimg, widd : 300, hdd : 200}),
     new Platform({x : 1500, y : canvas.height-bottom_offset-200, image : PTimg, widd : 300, hdd : 200}),
     new Platform({x : 2900, y : canvas.height-bottom_offset-100, image : PTimg, widd : 300, hdd : 200}),
-    new Platform({x : 3200, y : canvas.height-bottom_offset-200, image : PTimg, widd : 300, hdd : 200}),
+    new Platform({x : 3200, y : canvas.height-bottom_offset-200, image : PTimg, widd : 300, hdd : 200}),//yoda
     new Platform({x : 5100, y : canvas.height-bottom_offset-200, image : PTimg, widd : 300, hdd : 200}),
                 new Platform({x : 500-1, y : canvas.height-bottom_offset, image : Pimg, widd : 500, hdd : bottom_offset}),
                 new Platform({x : 1000-2, y : canvas.height-bottom_offset, image : Pimg, widd : 500, hdd : bottom_offset}),
@@ -149,11 +151,15 @@ const platforms = [new Platform({x : 0, y : canvas.height-bottom_offset, image :
 
 const genericobjects = [
     new GenericObject({x : 0, y : 0, image : createImage(background)}),
+    new GenericObject({x : 0, y : 0, image : createImage(st)}),
     new GenericObject({x : 0, y : 100, image : createImage(hills)}),
     new GenericObject({x : 3000, y : 0, image : createImage(background)}),
     new GenericObject({x : 3000, y : 100, image : createImage(hills)}),
-    new GenericObject({x : 280, y : 0, image : createImage(pi_name)}),
-    new GenericObject({x : 100, y : 30, image : createImage(st)})
+    new GenericObject({x : 200, y : 10, image : createImage(pi_name)}),
+    new GenericObject({x : 1000, y : 0, image : createImage(branch)}),
+    new GenericObject({x : 600, y : 200, image : createImage(inst)}),
+    new GenericObject({x : 2500, y : 50, image : createImage(interest)}),
+    new GenericObject({x : 7000, y : 0, image : createImage(contact)}),
 ]
 
 const keys = {
@@ -176,10 +182,6 @@ function animate(){
     c.fillStyle = 'white'
     c.fillRect(0,0,canvas.width,canvas.height)
 
-    // var container = document.getElementById("buttonContainer");
-    // // Append the button to the container
-    // container.appendChild(fullscreenButton);
-
     genericobjects.forEach(genericobject_c => {
         genericobject_c.draw()
     })
@@ -191,14 +193,14 @@ function animate(){
         player.velocity.x = -5
     }else {
         player.velocity.x = 0
-        if(keys.right.pressed == true && platforms[1].position.x > -5000){
+        if(keys.right.pressed == true && platforms[platforms.length -1].position.x > scw/2-scw/4+10){
             platforms.forEach((platform) => {
                 platform.position.x -= 5
                 genericobjects.forEach(genericobject_c => {
                     genericobject_c.position.x -= 0.5 
                 })
             }) 
-        }else if(keys.left.pressed == true && platforms[1].position.x < 700){
+        }else if(keys.left.pressed == true && platforms[0].position.x < 0){
             platforms.forEach((platform) => {
                 platform.position.x += 5
                 genericobjects.forEach(genericobject_c => {
@@ -212,15 +214,25 @@ function animate(){
         platform.draw()
     }) 
 
+    c.drawImage(yoda, platforms[5].position.x+0, platforms[5].position.y-290)
+    c.drawImage(githp, platforms[6].position.x-25, platforms[6].position.y-100)
+
     player.update()
 
+    var countp = 0;
     //collision detection 
     platforms.forEach((platform) => {
+    countp++;
     if((player.position.y + player.height <= platform.position.y) && 
        (player.position.y + player.velocity.y +player.height >= platform.position.y) && 
        (player.position.x + player.width >= platform.position.x) &&
        (player.position.x <= platform.position.x + platform.width)){    
             player.velocity.y = 0
+            console.log(countp)
+            if(countp == 6)
+                window.open('https://drive.google.com/file/d/12Nu13z2EpMvYJMEF0KVU1EfCP3uSLZ6_/view')
+            else if(countp == 7)
+                window.open('https://github.com/rajverma328')
         }
     })
 
@@ -258,6 +270,7 @@ window.addEventListener('keydown', ({ key }) => {
 )
 window.addEventListener('keyup', ({ key }) => {    
     if(key == 'a' || key =='A' || key =='ArrowLeft'){
+        keys.right.pressed = false
         keys.left.pressed = false
         player.image = player.sprites.stand.left 
         player.CPW = player.sprites.stand.cropWidth
@@ -265,6 +278,7 @@ window.addEventListener('keyup', ({ key }) => {
     }
     if(key == 'd' || key =='D' || key =='ArrowRight'){
         keys.right.pressed = false
+        keys.left.pressed = false
         player.image = player.sprites.stand.right 
         player.CPW = player.sprites.stand.cropWidth
         player.width = player.sprites.stand.width
@@ -307,42 +321,16 @@ window.addEventListener('touchend', function(event) {
     var touchX = event.changedTouches[0].clientX;;
     if (touchX < window.innerWidth / 2) {
         keys.left.pressed = false
+        keys.right.pressed = false
         player.image = player.sprites.stand.left 
         player.CPW = player.sprites.stand.cropWidth
         player.width = player.sprites.stand.width
     } else {
         keys.right.pressed = false
+        keys.left.pressed = false
         player.image = player.sprites.stand.right 
         player.CPW = player.sprites.stand.cropWidth
         player.width = player.sprites.stand.width
-    }
-});
-
-fullscreenButton.addEventListener('touchstart', function() {
-    console.log("hh")
-    fullscreenButton.style.display = 'none'
-    bgm.style.display = 'none'
-});
-
-fullscreenButton.addEventListener("click", function() {
-    console.log("hh")
-    const elem = document.documentElement;
-    if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-        fullscreenButton.style.display = 'none'
-        bgm.style.display = 'none'
-    } else if (elem.mozRequestFullScreen) { // Firefox
-        elem.mozRequestFullScreen();
-        fullscreenButton.style.display = 'none'
-        bgm.style.display = 'none'
-    } else if (elem.webkitRequestFullscreen) { // Chrome, Safari, Opera
-        elem.webkitRequestFullscreen();
-        fullscreenButton.style.display = 'none'
-        bgm.style.display = 'none'
-    } else if (elem.msRequestFullscreen) { // Edge
-        elem.msRequestFullscreen();
-        fullscreenButton.style.display = 'none'
-        bgm.style.display = 'none'
     }
 });
 
@@ -359,3 +347,6 @@ function handleOrientationChange() {
   
   // Listen for orientation change events
   window.addEventListener("orientationchange", handleOrientationChange);
+
+
+
