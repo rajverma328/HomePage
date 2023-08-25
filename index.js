@@ -229,10 +229,12 @@ function animate(){
        (player.position.x <= platform.position.x + platform.width)){    
             player.velocity.y = 0
             // console.log(countp)
-            if(countp == 6)
-                window.open('https://drive.google.com/file/d/12Nu13z2EpMvYJMEF0KVU1EfCP3uSLZ6_/view')
-            else if(countp == 7)
-                window.open('https://github.com/rajverma328')
+            if(countp == 6){
+                window.location.href = 'https://drive.google.com/file/d/12Nu13z2EpMvYJMEF0KVU1EfCP3uSLZ6_/view'
+            }
+            else if(countp == 7){
+                window.location.href  = 'https://github.com/rajverma328'
+            }
         }
     })
 
