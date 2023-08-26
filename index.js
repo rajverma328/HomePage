@@ -230,7 +230,7 @@ function animate(){
             player.velocity.y = 0
             // console.log(countp)
             if(countp == 6){
-                window.location.href = 'https://drive.google.com/file/d/12Nu13z2EpMvYJMEF0KVU1EfCP3uSLZ6_/view'
+                window.location.href = 'https://rajverma328.github.io/img/personal_info/resume.pdf'
             }
             else if(countp == 7){
                 window.location.href  = 'https://github.com/rajverma328'
