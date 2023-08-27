@@ -21,6 +21,8 @@ const githp = document.getElementById("gith");
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
+var link_check = false
+
 canvas.width = screen.width
 canvas.height = screen.height
 if(canvas.width > 1024)
@@ -229,12 +231,16 @@ function animate(){
        (player.position.x <= platform.position.x + platform.width)){    
             player.velocity.y = 0
             // console.log(countp)
-            if(countp == 6){
-                window.location.href = 'https://rajverma328.github.io/img/personal_info/resume.pdf'
+            if(countp == 6 && link_check == false){
+                link_check = true
+                window.open('https://rajverma328.github.io/img/personal_info/resume.pdf')
             }
-            else if(countp == 7){
-                window.location.href  = 'https://github.com/rajverma328'
+            else if(countp == 7 && link_check == false){
+                link_check = true
+                window.open('https://github.com/rajverma328')
             }
+            else if(countp != 7 && countp != 6)
+                link_check = false
         }
     })
 
