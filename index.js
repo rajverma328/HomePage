@@ -21,6 +21,24 @@ const githp = document.getElementById("gith");
 const canvas = document.querySelector('canvas')
 const c = canvas.getContext('2d')
 
+var touchco = 0
+var audio = new Audio();
+audio.src = "./sound/Pix - Lava monsters.mp3";
+audio.volume = 0.7
+audio.loop = true
+
+var lvlup = new Audio();
+lvlup.src = "./sound/Level Up Sound Effect.mp3"
+
+var lmao_ded = new Audio();
+lmao_ded.src = "./sound/died.mp3"
+lmao_ded.playbackRate = 2
+
+var jumpso = new Audio();
+jumpso.src = "./sound/Jump.mp3"
+jumpso.volume = 0.8
+jumpso.playbackRate = 2
+
 var link_check = false
 
 canvas.width = screen.width
@@ -233,10 +251,12 @@ function animate(){
             // console.log(countp)
             if(countp == 6 && link_check == false){
                 link_check = true
+                lvlup.play()
                 window.open('https://rajverma328.github.io/img/personal_info/resume.pdf')
             }
             else if(countp == 7 && link_check == false){
                 link_check = true
+                lvlup.play()
                 window.open('https://github.com/rajverma328')
             }
             else if(countp != 7 && countp != 6)
@@ -245,6 +265,7 @@ function animate(){
     })
 
     if(player.position.y >= canvas.height-player.height){
+        lmao_ded.play()
         player.position.x = 100
         player.position.y = 100 
         player.velocity.y = 0
@@ -256,6 +277,8 @@ animate()
 
 window.addEventListener('keydown', ({ key }) => {    
     // console.log(key)
+    if(touchco == 0)
+        audio.play()
     if(key == 'a' || key =='A' || key =='ArrowLeft'){
         keys.left.pressed = true
         player.image = player.sprites.run.left 
@@ -270,6 +293,7 @@ window.addEventListener('keydown', ({ key }) => {
     }
     if((key == 'w' || key =='W' || key =='ArrowUp') && player.velocity.y == 0 && keys.up.pressed == false){
         keys.up.pressed = true
+        jumpso.play()
         player.velocity.y -= 15
     }
     if(key == 's' || key =='S' || key =='ArrowDown') 
@@ -299,6 +323,8 @@ window.addEventListener('keyup', ({ key }) => {
 )
 var touchYstart = 0
 window.addEventListener('touchstart', function(event) {
+    if(touchco == 0)
+        audio.play()
     var touchX = event.changedTouches[0].clientX;;
     touchYstart = event.changedTouches[0].clientY;
     if (touchX < window.innerWidth / 2) {
@@ -320,6 +346,7 @@ document.addEventListener('touchmove', function(event) {
     if (Math.abs(swipeDistanceY) >= minSwipeDistance && player.velocity.y == 0) {
         if (swipeDistanceY < 0) {
             keys.up.pressed = true
+            jumpso.play()
             player.velocity.y -= 15
         }
     }
