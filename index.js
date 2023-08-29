@@ -251,11 +251,13 @@ function animate(){
             // console.log(countp)
             if(countp == 6 && link_check == false){
                 link_check = true
+                audio.pause()
                 lvlup.play()
                 window.open('https://rajverma328.github.io/img/personal_info/resume.pdf')
             }
             else if(countp == 7 && link_check == false){
                 link_check = true
+                audio.pause()
                 lvlup.play()
                 window.open('https://github.com/rajverma328')
             }
