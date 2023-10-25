@@ -16,6 +16,7 @@ const interest = document.getElementById("interest");
 const contact = document.getElementById("contact");
 const yoda = document.getElementById("yoda");
 const githp = document.getElementById("gith");
+const tunnel = document.getElementById("tunnel");
 // console.log(interest)
 
 const canvas = document.querySelector('canvas')
@@ -24,7 +25,7 @@ const c = canvas.getContext('2d')
 var touchco = 0
 var audio = new Audio();
 audio.src = "./sound/Pix - Lava monsters.mp3";
-audio.volume = 0.7
+audio.volume = 0.2
 audio.loop = true
 
 var lvlup = new Audio();
@@ -34,10 +35,14 @@ var lmao_ded = new Audio();
 lmao_ded.src = "./sound/died.mp3"
 lmao_ded.playbackRate = 2
 
+var warp = new Audio();
+warp.src = "./sound/warp.mp3"
+warp.playbackRate = 1
+
 var jumpso = new Audio();
 jumpso.src = "./sound/Jump.mp3"
 jumpso.volume = 0.8
-jumpso.playbackRate = 2
+jumpso.playbackRate = 2.5
 
 var link_check = false
 
@@ -154,7 +159,8 @@ const platforms = [new Platform({x : 0, y : canvas.height-bottom_offset, image :
     new Platform({x : 1200, y : canvas.height-bottom_offset-100, image : PTimg, widd : 300, hdd : 200}),
     new Platform({x : 1500, y : canvas.height-bottom_offset-200, image : PTimg, widd : 300, hdd : 200}),
     new Platform({x : 2900, y : canvas.height-bottom_offset-100, image : PTimg, widd : 300, hdd : 200}),
-    new Platform({x : 3200, y : canvas.height-bottom_offset-200, image : PTimg, widd : 300, hdd : 200}),//yoda
+    new Platform({x : 3200, y : canvas.height-bottom_offset-200, image : tunnel, widd : 150, hdd : 200}),//yoda
+    // new Platform({x : 4600, y : canvas.height-bottom_offset-200, image : tunnel, widd :150, hdd : 200 }),
     new Platform({x : 5100, y : canvas.height-bottom_offset-200, image : PTimg, widd : 300, hdd : 200}),
                 new Platform({x : 500-1, y : canvas.height-bottom_offset, image : Pimg, widd : 500, hdd : bottom_offset}),
                 new Platform({x : 1000-2, y : canvas.height-bottom_offset, image : Pimg, widd : 500, hdd : bottom_offset}),
@@ -234,7 +240,7 @@ function animate(){
         platform.draw()
     }) 
 
-    c.drawImage(yoda, platforms[5].position.x+0, platforms[5].position.y-290)
+    c.drawImage(yoda, platforms[5].position.x-100, platforms[5].position.y-290)
     c.drawImage(githp, platforms[6].position.x-25, platforms[6].position.y-100)
 
     player.update()
@@ -249,11 +255,13 @@ function animate(){
        (player.position.x <= platform.position.x + platform.width)){    
             player.velocity.y = 0
             // console.log(countp)
-            if(countp == 6 && link_check == false){
-                link_check = true
-                audio.pause()
-                lvlup.play()
-                window.open('https://rajverma328.github.io/img/personal_info/resume.pdf')
+            if(countp == 6 && link_check == false){ 
+                if(keys.down.pressed == true){
+                    link_check = true
+                    audio.pause()
+                    warp.play()
+                    window.open('https://rajverma328.github.io/img/personal_info/resume.pdf')
+                }
             }
             else if(countp == 7 && link_check == false){
                 link_check = true
@@ -261,7 +269,7 @@ function animate(){
                 lvlup.play()
                 window.open('https://github.com/rajverma328')
             }
-            else if(countp != 7 && countp != 6)
+            else if(countp != 6 && countp != 7)
                 link_check = false
         }
     })
@@ -350,6 +358,9 @@ document.addEventListener('touchmove', function(event) {
             keys.up.pressed = true
             jumpso.play()
             player.velocity.y -= 15
+        }
+        if (swipeDistanceY > 0) {
+            keys.down.pressed = true
         }
     }
 
